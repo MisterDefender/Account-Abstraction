@@ -42,24 +42,26 @@ async function main() {
   const UserOperation = {
     sender, // smart account address
     nonce: await EntryPoint.getNonce(sender, 0),
-    initCode,
+    // initCode, (use it first time to create smart account)
+    initCode: "0x", // used from second time(after smart account creation)
     callData, // smart account calling calldata {user txn calldata}
     callGasLimit: 200_000,
     verificationGasLimit: 200_000, // default verification gas. will add create2 cost (3200+200*length) if initCode exists
     preVerificationGas: 50_000, // should also cover calldata cost.
     maxFeePerGas: ethers.parseUnits("10", "gwei"),
     maxPriorityFeePerGas: ethers.parseUnits("5", "gwei"),
-    paymasterAndData: "0x",
+    // paymasterAndData: "0x", // Since gas is not payed by Paymaster
+    paymasterAndData: PAY_MASTER_ADDRESS, // since we're paying gas with paymaster
     signature: "0x",
   };
 
   // uncomment to deposit fund to entry point for gas consumption of account contract.
   // const depositForGasTx = await(await EntryPoint.depositTo(sender, {value: ethers.parseEther("10")})).wait();
 
-  //When paymaster will pay the gas for user transactions
-  const depositForGasTx = await(await EntryPoint.depositTo(PAY_MASTER_ADDRESS, {value: ethers.parseEther("10")})).wait();
-  console.log("Balance deposited: ", await EntryPoint.balanceOf(PAY_MASTER_ADDRESS));
-  console.log("Sender address created [Smart-Account] : ", sender);
+  //When paymaster will pay the gas for user transactions //Run when the funds are low 
+//   const depositForGasTx = await(await EntryPoint.depositTo(PAY_MASTER_ADDRESS, {value: ethers.parseEther("10")})).wait();
+//   console.log("Balance deposited: ", await EntryPoint.balanceOf(PAY_MASTER_ADDRESS));
+//   console.log("Sender address created [Smart-Account] : ", sender);
 
   let tx = await (
     await EntryPoint.handleOps([UserOperation], addressZero)

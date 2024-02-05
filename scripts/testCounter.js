@@ -1,7 +1,7 @@
 
 const hre = require("hardhat");
 const ethers = hre.ethers;
-const SMART_ACCOUNT = "0xCafac3dD18aC6c6e92c921884f9E4176737C052c";
+const SMART_ACCOUNT = "0xa16E02E87b7454126E5E10d957A927A7F5B5d2be";
 
 async function main() {
   const smartAccount = await ethers.getContractAt("Account", SMART_ACCOUNT);
