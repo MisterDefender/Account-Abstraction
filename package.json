@@ -1,0 +1,20 @@
+{
+  "name": "account-abstraction-github",
+  "version": "1.0.0",
+  "description": "Account Abstraction EIP-4337",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "hardhat": "^2.19.5"
+  },
+  "dependencies": {
+    "@account-abstraction/contracts": "^0.6.0",
+    "@openzeppelin/contracts": "^4.2.0",
+    "dotenv": "^16.4.1"
+  }
+}
